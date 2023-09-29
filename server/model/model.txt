@@ -1,0 +1,49 @@
+Certainly! Here's an example of a database schema for your job finder website using MongoDB:
+
+1. User Collection:
+   - _id: ObjectId (unique identifier)
+   - name: String (user's full name)
+   - email: String (user's email address)
+   - password: String (hashed user password)
+   - profilePicture: String (path to the user's profile picture)
+   - createdAt: Date (timestamp for user creation)
+
+2. Job Collection:
+   - _id: ObjectId (unique identifier)
+   - companyId: ObjectId (reference to the company collection)
+   - title: String (job title)
+   - description: String (job description)
+   - location: String (job location)
+   - salary: Number (job salary)
+   - type: String (full-time, part-time, contract, etc.)
+   - experienceLevel: String (entry-level, mid-level, senior, etc.)
+   - createdAt: Date (timestamp for job creation)
+
+3. Application Collection:
+   - _id: ObjectId (unique identifier)
+   - jobId: ObjectId (reference to the job collection)
+   - userId: ObjectId (reference to the user collection)
+   - status: String (applied, shortlisted, rejected, etc.)
+   - appliedAt: Date (timestamp for application submission)
+
+4. Message Collection:
+   - _id: ObjectId (unique identifier)
+   - senderId: ObjectId (reference to the user collection)
+   - receiverId: ObjectId (reference to the user collection)
+   - content: String (message content)
+   - sentAt: Date (timestamp for message sending)
+
+5. Company Collection:
+   - _id: ObjectId (unique identifier)
+   - name: String (company name)
+   - address: String (company address)
+   - industry: String (industry type)
+   - website: String (company website URL)
+
+Please note that this is a simplified example, and you may need to expand the schema to include additional fields based on your specific requirements. Additionally, you can establish relationships between collections using the ObjectId references.
+
+Remember to create appropriate indexes on fields that will be frequently used for searching or filtering, such as email, job title, company name, etc. This can improve the performance of your database queries.
+
+Once you have defined the database schema, you can proceed with implementing the necessary CRUD (Create, Read, Update, Delete) operations in your backend APIs to interact with the database.
+
+Please adapt the database schema to your specific needs and preferences, as this is just an example to help you get started with the development of your job finder website.

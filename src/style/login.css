@@ -6,7 +6,13 @@
   width: 100vw;
   height: 100vh;
 }
-
+#captcha {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #loginl {
   width: 116px;
   padding: 10px;
@@ -34,4 +40,37 @@
     width: 100vw;
     height: 100vh;
   }
+}
+
+.sidebar {
+  transition: all 0.5s;
+}
+.sidebar.collapsed {
+  max-width: 12%;
+  overflow: hidden;
+  border-right: 0;
+}
+.close-btn {
+  position: absolute;
+}
+
+.message-body {
+  transition: all 0.5s ease;
+  width: 78%;
+  height: 99%;
+}
+
+.toggle-width {
+  width: 86%;
+}
+
+.silder-btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.silder-size {
+  width: 25px;
+  height: 25px;
 }

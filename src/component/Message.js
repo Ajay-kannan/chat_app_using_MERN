@@ -1,23 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "../tools/Message/Sidebar";
 import Chat from "../tools/Message/Chat";
-import axios from "axios";
-import { MessageProvider } from "../context/MessageContext";
 import { AuthContext } from "../context/AuthProvider";
 import Logo from "../style/logo.png";
+import { CiLogin } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 function Message() {
-  let { setFriend, setFriendId, setFriendImage, getUserList } =
-    useContext(MessageProvider);
-
-  let { userId } = useContext(AuthContext);
-
   let { setUserName, setUserId, setUserEmail, setUserImage } =
     useContext(AuthContext);
 
   let [loading, setLoading] = useState(true);
 
-  let userid = useRef("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function func() {
@@ -25,45 +20,20 @@ function Message() {
       setUserId(localStorage.getItem("userId"));
       setUserEmail(localStorage.getItem("userEmail"));
       setUserImage(localStorage.getItem("userImage"));
-      userid.current = localStorage.getItem("userId");
-      funcUser();
+      setLoading(false);
     }
 
-    async function funcUser() {
-      try {
-        await axios
-          .post("http://localhost:5001/message/userfriend", {
-            userId: userid.current,
-          })
-          .then((json) => {
-            let result = [];
-            json.data.forEach((user) => {
-              result.push({
-                friend: user.username,
-                friendid: user.friendid,
-                friendImage: user.userImage,
-              });
-            });
-            getUserList(result);
-            setFriend(result[0].friend);
-            setFriendId(result[0].friendid);
-            setFriendImage(result[0].friendImage);
-            setLoading(false);
-          });
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
-      }
-    }
     func();
   }, []);
 
-  // useEffect(() => {
-  //   if (refOnce1.current) func();
-  //   else {
-  //     refOnce1.current = true;
-  //   }
-  // }, []);
+  const handleLogOut = () => {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userImage");
+    localStorage.removeItem("userEmail");
+    navigate("/login", { replace: true });
+  };
+
   return (
     <React.Fragment>
       <div
@@ -77,19 +47,31 @@ function Message() {
             height: "9%",
             width: "98%",
             border: "2px solid rgb(214, 221, 235)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignContent: "center",
           }}
         >
-          <h1
+          <img src={Logo} style={{ height: "50px", width: "200px" }} />
+          <div
             style={{
-              height: "100%",
               display: "grid",
-              placeItems: "center",
-              width: "20%",
-              fontFamily: "monospace",
+              alignItems: "center",
+              color: "red",
             }}
           >
-            <img src={Logo} style={{ height: "50px", width: "200px" }} />
-          </h1>
+            <span
+              style={{
+                border: "1px solid red",
+                padding: "5px",
+                borderRadius: "15%",
+              }}
+              onClick={handleLogOut}
+            >
+              {" "}
+              <CiLogin /> log out
+            </span>
+          </div>
         </div>
         {loading ? (
           "loading..."

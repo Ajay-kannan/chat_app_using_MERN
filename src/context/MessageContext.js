@@ -13,6 +13,10 @@ function MessageContext({ children }) {
   const [sendMsg, setSendMsg] = useState(false);
   const [isGroup, setIsGroup] = useState(false);
   const [groupCode, setGroupCode] = useState("");
+  const [messageLoading, setMessageLoading] = useState(false);
+  const [friendRefresh, setFriendRefresh] = useState(true);
+  let [isFriend, setIsFriend] = useState(false);
+  const [encrypKey, setEncrypKey] = useState("");
   return (
     <MessageProvider.Provider
       value={{
@@ -38,6 +42,14 @@ function MessageContext({ children }) {
         setIsGroup,
         groupCode,
         setGroupCode,
+        messageLoading,
+        setMessageLoading,
+        friendRefresh,
+        setFriendRefresh,
+        isFriend,
+        setIsFriend,
+        encrypKey,
+        setEncrypKey,
       }}
     >
       {children}

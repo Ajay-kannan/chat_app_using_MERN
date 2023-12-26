@@ -47,12 +47,13 @@ route.post("/addfriend", async (req, res) => {
       userid: req.body.userId,
       userImage: req.body.friendImage,
       friendid: req.body.friendid,
+      key: req.body.key,
     };
     if (user) {
       res.json("already");
     } else {
       Userfriend.create(data);
-      res.json("success");
+      res.json("ok");
     }
   } catch {}
 });
@@ -88,6 +89,35 @@ route.post("/userfriend", async (req, res) => {
       userid: new ObjectId(req.body.userId),
     });
     res.json(getuser);
+  } catch (error) {
+    res.status(400).json("error");
+  }
+});
+
+route.post("/removeFriend", async (req, res) => {
+  try {
+    let val = await Userfriend.deleteOne({
+      friendid: new ObjectId(req.body.friendid),
+      userid: new ObjectId(req.body.userId),
+    });
+    console.log(val.deletedCount);
+    res.json("done");
+  } catch (error) {
+    res.status(400).json("error");
+  }
+});
+
+route.post("/findFriend", async (req, res) => {
+  try {
+    let getuser = await Userfriend.find({
+      $and: [
+        {
+          friendid: new ObjectId(req.body.friendid),
+          userid: new ObjectId(req.body.userId),
+        },
+      ],
+    });
+    if (getuser.length == 0) res.json("none");
   } catch (error) {
     res.status(400).json("error");
   }

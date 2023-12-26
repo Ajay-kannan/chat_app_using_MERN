@@ -3,19 +3,31 @@ import { MessageProvider } from "../../context/MessageContext";
 import { AuthContext } from "../../context/AuthProvider";
 import Styles from "../../style/message";
 import axios from "axios";
+import { DoEncrypt } from "../../context/aes";
 
 function Input() {
-  let { friendid, inputMessage, setInputMessage, sendMsg, setSendMsg } =
-    useContext(MessageProvider);
+  let {
+    friendid,
+    inputMessage,
+    setInputMessage,
+    sendMsg,
+    setSendMsg,
+    isFriend,
+    encrypKey,
+  } = useContext(MessageProvider);
   let { userId } = useContext(AuthContext);
   async function handleSubmit(event) {
     event.preventDefault();
+    if (isFriend) {
+      alert("add friend first !");
+      return;
+    }
     if (inputMessage !== "") {
       try {
         await axios
           .post("http://localhost:5001/message/message", {
             friendid,
-            inputMessage,
+            inputMessage: DoEncrypt(inputMessage, encrypKey),
             userId,
           })
           .then((res) => {

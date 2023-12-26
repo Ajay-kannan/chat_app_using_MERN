@@ -4,6 +4,7 @@ import Chats from "./Chats";
 import { BiSearch } from "react-icons/bi";
 import Styles from "../../style/message";
 import { MessageProvider } from "../../context/MessageContext";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
 function GroupChat() {
   const { setIsGroup, isGroup, groupCode, setGroupCode } =
@@ -55,7 +56,22 @@ function Sidebar() {
     borderRight: "2px solid rgb(214, 221, 235)",
   };
   return (
-    <div style={sidebar}>
+    <div style={sidebar} className="sidebar">
+      <div className="silder-btn">
+        <div
+          className="close-btn"
+          onClick={() => {
+            document
+              .getElementsByClassName("sidebar")[0]
+              .classList.toggle("collapsed");
+            document
+              .getElementsByClassName("message-body")[0]
+              .classList.toggle("toggle-width");
+          }}
+        >
+          <IoIosArrowDropleftCircle className="silder-size" />
+        </div>
+      </div>
       <Search />
       <Chats />
       <GroupChat />

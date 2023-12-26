@@ -18,6 +18,9 @@ var userlist = mongoose.Schema({
     ref: "User",
     require: true,
   },
+  key: {
+    type: String, // AES-128-CBC or RSA-OAEP
+  },
 });
 
 module.exports = mongoose.model("userFriend", userlist);

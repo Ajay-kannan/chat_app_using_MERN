@@ -11,6 +11,10 @@ const Searchresult = () => {
     setFriend,
     setFriendId,
     setFriendImage,
+    setFriendRefresh,
+    friendRefresh,
+    setMessageLoading,
+    setEncrypKey,
   } = useContext(MessageProvider);
 
   // const overlay = ;
@@ -36,6 +40,9 @@ const Searchresult = () => {
               setFriend(result.name);
               setFriendId(result.userid);
               setFriendImage(result.userImage);
+              setFriendRefresh(!friendRefresh);
+              setMessageLoading(true);
+              setEncrypKey("null");
             }}
           >
             <span>{result.name}</span>
@@ -53,7 +60,6 @@ function Search() {
     try {
       await axios.get("http://localhost:5001/message/userlist").then((json) => {
         const result = json.data.filter((user) => {
-          console.log(json.data);
           return (
             text && user && user.name && user.name.toLowerCase().includes(text)
           );

@@ -6,15 +6,7 @@ import Styles from "../../style/message";
 import axios from "axios";
 
 function ChatMessages() {
-  let {
-    friend,
-    friendid,
-    friendImage,
-    setMessage,
-    message,
-    setFriend,
-    sendMsg,
-  } = useContext(MessageProvider);
+  let { friend, friendid, setMessage, message } = useContext(MessageProvider);
   let { userId } = useContext(AuthContext);
   let scrollRef = useRef();
   useEffect(() => {
@@ -34,7 +26,7 @@ function ChatMessages() {
       }
     }
     func();
-  }, [friend]);
+  }, [friend, friendid]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });

@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { MessageProvider } from "../../context/MessageContext";
 import { AuthContext } from "../../context/AuthProvider";
+
+import { DoDecrypt } from "../../context/aes";
+
 const Message = ({ messageData }) => {
   let { userId, userImage } = useContext(AuthContext);
-  let { friendImage } = useContext(MessageProvider);
+  let { friendImage, encrypKey } = useContext(MessageProvider);
   const styleChange = userId === messageData.senderId ? "owner" : "messages";
   return (
     <div className={styleChange}>
@@ -20,7 +23,7 @@ const Message = ({ messageData }) => {
         <span>{time}</span> */}
       </div>
       <div className="messageContent">
-        <p>{messageData.content}</p>
+        <p>{DoDecrypt(messageData.content, encrypKey)}</p>
       </div>
     </div>
   );
